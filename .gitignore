@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+dependencies/
+source.zip
+hpa_env/
+.vscode/
+data/

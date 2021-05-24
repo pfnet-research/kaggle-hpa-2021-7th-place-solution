@@ -1,0 +1,3 @@
+[submodule "HPA-Cell-Segmentation"]
+	path = HPA-Cell-Segmentation
+	url = https://github.com/CellProfiling/HPA-Cell-Segmentation

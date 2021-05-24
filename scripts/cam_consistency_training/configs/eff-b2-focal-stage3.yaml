@@ -1,0 +1,97 @@
+fold_index: 0
+n_folds: 5
+model:
+  arch: efficientnet_b2
+  instance_norm_input: true
+consistency_training:
+  drop_cell_p: 0.0
+  cutmix_p: 0.0
+  cutmix_p_in_heavier_aug: 1.0
+  shear_range_abs: 0.0
+  angle_limit: 0.0
+  scale_limit: 0.0
+  max_alpha: 1.0
+  alpha_schedule: 0.0
+  consistency_loss_criteria: CE
+  consistency_loss_targets: all
+optim:
+  objective: focal
+  optimizer: Adam
+  optimizer_params:
+    lr: 1.0e-3
+  lr_scheduler: cos
+  lr_scheduler_params:
+    warmup_epochs: 5
+    warmup_factor: 0.1
+  batch_size: 8
+  nb_epoch: 50
+train_dataset:
+  image_directory: data/input/hpa-768768.zip
+  cell_mask_directory: data/input/hpa-768-mask-v2-from-1536.zip
+  pseudo_cell_level_label_dir: data/working/image-level-and-cell-crop-both-5folds/
+public_hpa_dataset:
+  image_directory: data/input/hpa-public-768.zip/hpa-public-768
+  cell_mask_directory: data/input/hpa-public-768-mask-v2-from-1536.zip
+  pseudo_cell_level_label_dir: data/working/image-level-and-cell-crop-both-5folds/
+test_dataset:
+  image_directory: data/input/hpa-768768-test.zip
+  cell_mask_directory: data/input/hpa-test-mask-v2-768.zip
+  orig_size_cell_mask_directory: data/input/hpa-test-mask-v2.zip
+train_transform:
+  __version__: 0.5.2
+  transform:
+    __class_fullname__: albumentations.core.composition.Compose
+    additional_targets: {}
+    bbox_params: null
+    keypoint_params: null
+    p: 1.0
+    transforms:
+    - __class_fullname__: albumentations.augmentations.transforms.RandomCrop
+      always_apply: false
+      height: 512
+      p: 1.0
+      width: 512
+    - __class_fullname__: albumentations.augmentations.transforms.HorizontalFlip
+      always_apply: false
+      p: 0.5
+    - __class_fullname__: albumentations.augmentations.transforms.Normalize
+      always_apply: false
+      max_pixel_value: 255.0
+      mean: 0.5
+      p: 1.0
+      std: 0.125
+valid_transform:
+  __version__: 0.5.2
+  transform:
+    __class_fullname__: albumentations.core.composition.Compose
+    additional_targets: {}
+    bbox_params: null
+    keypoint_params: null
+    p: 1.0
+    transforms:
+    - __class_fullname__: albumentations.augmentations.transforms.CenterCrop
+      always_apply: false
+      height: 512
+      p: 1.0
+      width: 512
+    - __class_fullname__: albumentations.augmentations.transforms.Normalize
+      always_apply: false
+      max_pixel_value: 255.0
+      mean: 0.5
+      p: 1.0
+      std: 0.125
+test_transform:
+  __version__: 0.5.2
+  transform:
+    __class_fullname__: albumentations.core.composition.Compose
+    additional_targets: {}
+    bbox_params: null
+    keypoint_params: null
+    p: 1.0
+    transforms:
+    - __class_fullname__: albumentations.augmentations.transforms.Normalize
+      always_apply: false
+      max_pixel_value: 255.0
+      mean: 0.5
+      p: 1.0
+      std: 0.125

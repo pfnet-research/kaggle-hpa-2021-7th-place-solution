@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.vscode/
+somen.egg-info/
+pip-wheel-metadata/

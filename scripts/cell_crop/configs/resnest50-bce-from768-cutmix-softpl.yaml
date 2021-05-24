@@ -1,0 +1,29 @@
+fold_index: 0
+n_folds: 5
+model:
+  arch: resnest50d
+  instance_norm_input: true
+optim:
+  objective: bce
+  optimizer: Adam
+  optimizer_params:
+    lr: 1.0e-3
+  lr_scheduler: cos
+  lr_scheduler_params:
+    warmup_epochs: 5
+    warmup_factor: 0.1
+  batch_size: 128
+  nb_epoch: 50
+train_dataset:
+  cell_image_directory: data/input/hpa-cell-crop-v2-192-from-768.zip
+  soft_pseudo_labeling_config:
+    label_dir: data/working/consistency_training/b2-1536-b2-b5-b7-768-avg/
+public_hpa_dataset:
+  cell_image_directory: data/input/hpa-public-cell-crop-v2-192-from-768.zip
+  soft_pseudo_labeling_config:
+    label_dir: data/working/consistency_training/b2-1536-b2-b5-b7-768-avg/
+test_dataset:
+  cell_image_directory: data/input/hpa-test-cell-crop-v2-192-from-768.zip
+  orig_size_cell_mask_directory: data/input/hpa-test-mask-v2.zip
+exclude_bad_examples: 0.0
+cutmix_p: 1.0
